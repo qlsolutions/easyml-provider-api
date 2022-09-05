@@ -145,7 +145,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/SerieTimeRange"
+                "$ref" : "#/components/schemas/SeriePeriod"
               }
             }
           },
@@ -157,7 +157,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/SerieData"
+                  "$ref" : "#/components/schemas/SerieDetails"
                 }
               }
             }
@@ -268,7 +268,7 @@
           }
         }
       },
-      "SerieTimeRange" : {
+      "SeriePeriod" : {
         "type" : "object",
         "properties" : {
           "limit" : {
@@ -286,7 +286,7 @@
           }
         }
       },
-      "SerieData" : {
+      "SerieDetails" : {
         "allOf" : [ {
           "$ref" : "#/components/schemas/Serie"
         }, {
@@ -295,13 +295,13 @@
             "data" : {
               "type" : "array",
               "items" : {
-                "$ref" : "#/components/schemas/HistoryRecord"
+                "$ref" : "#/components/schemas/SerieRecord"
               }
             }
           }
         } ]
       },
-      "HistoryRecord" : {
+      "SerieRecord" : {
         "type" : "object",
         "properties" : {
           "timestamp" : {
