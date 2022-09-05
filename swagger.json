@@ -1,0 +1,323 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "EasyML - Servizi REST Data Provider",
+    "description" : "Documentazione API che raccoglie alcune indicazioni circa i servizi REST che i dispositivi Data Provider devono implementare per poter comunicare con lo strato Application del software EasyML.",
+    "contact" : {
+      "email" : "info@qlsol.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "description" : "SwaggerHub API Auto Mocking",
+    "url" : "https://virtserver.swaggerhub.com/qlsol/easyml-provider/1.0.0"
+  }, {
+    "description" : "Default Data Provicer API",
+    "url" : "/easyml"
+  } ],
+  "tags" : [ {
+    "name" : "General",
+    "description" : "Richieste per le informazioni generali"
+  }, {
+    "name" : "Series",
+    "description" : "Richieste per la gestione degli storici nel Data Provider"
+  } ],
+  "paths" : {
+    "/about" : {
+      "get" : {
+        "tags" : [ "General" ],
+        "summary" : "Informazioni Data Provider",
+        "description" : "Utilizzata per richiedere tutte le informazioni del Data Provider",
+        "operationId" : "about",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/About"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid status value",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorElem"
+                }
+              }
+            }
+          }
+        },
+        "x-codegen-request-body-name" : "Data"
+      }
+    },
+    "/series" : {
+      "get" : {
+        "tags" : [ "Series" ],
+        "summary" : "Serie storiche fornite dal Data Provider",
+        "description" : "Fornisce la lista di tutte le Serie storiche fornite dal Data Provider",
+        "operationId" : "seriesget",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Series"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid status value",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorElem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/serie/{serieid}" : {
+      "get" : {
+        "tags" : [ "Series" ],
+        "summary" : "Dettagli Serie storica",
+        "description" : "Fornisce i dettagli di una singola Serie.",
+        "operationId" : "serieget",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "serieid",
+          "schema" : {
+            "type" : "string"
+          },
+          "required" : true,
+          "description" : "ID della Serie di cui si vogliono i dettagli"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Serie"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid status value",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorElem"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Series" ],
+        "summary" : "Dettagli e dati della Serie",
+        "description" : "Fornisce i dettagli della serie e i dati salvati nel range temporale scelto.",
+        "operationId" : "seriepost",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "serieid",
+          "schema" : {
+            "type" : "string"
+          },
+          "required" : true,
+          "description" : "ID della Serie di cui si vogliono i dettagli e i dati"
+        } ],
+        "requestBody" : {
+          "description" : "Range temporale per i dati scelto",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SerieTimeRange"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SerieData"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid status value",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorElem"
+                }
+              }
+            }
+          }
+        },
+        "x-codegen-request-body-name" : "Data"
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ErrorElem" : {
+        "type" : "object",
+        "properties" : {
+          "exception" : {
+            "type" : "string",
+            "example" : "InvalidException"
+          },
+          "cause" : {
+            "type" : "string",
+            "example" : "Invalid value on given data"
+          }
+        }
+      },
+      "About" : {
+        "type" : "object",
+        "properties" : {
+          "host_id" : {
+            "type" : "string",
+            "description" : "HostId identificativo del Data Provider",
+            "example" : "Win-23AC-FFDA-9F6C-423B"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Definisce il tipo di Data Provider che sta rispondendo",
+            "example" : "Niagara"
+          },
+          "version" : {
+            "type" : "string",
+            "description" : "Versione dell'implementazione del Data Provider",
+            "example" : "6.6.0.0"
+          }
+        }
+      },
+      "Series" : {
+        "type" : "object",
+        "properties" : {
+          "providers" : {
+            "type" : "array",
+            "description" : "collezione dei DataProvider configurati nel sistema",
+            "items" : {
+              "$ref" : "#/components/schemas/Serie"
+            }
+          }
+        }
+      },
+      "Serie" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "example" : "ARNEG_BMS_C/IME245_EW"
+          },
+          "displayName" : {
+            "type" : "string",
+            "example" : "Aus.Tettoia CLL Energia"
+          },
+          "firstTimestamp" : {
+            "type" : "integer",
+            "example" : 550064600026
+          },
+          "lastTimestamp" : {
+            "type" : "integer",
+            "example" : 558709100642
+          },
+          "interval" : {
+            "type" : "integer",
+            "example" : 900000
+          },
+          "recordCount" : {
+            "type" : "integer",
+            "example" : 606
+          },
+          "tags" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "example" : "metering_energy"
+            }
+          },
+          "type" : {
+            "type" : "string",
+            "example" : "numeric"
+          },
+          "units" : {
+            "type" : "string",
+            "example" : "kW-hr"
+          }
+        }
+      },
+      "SerieTimeRange" : {
+        "type" : "object",
+        "properties" : {
+          "limit" : {
+            "type" : "integer",
+            "description" : "Limita il numero massimo di record forniti. 0 = disabilita il limite",
+            "example" : 1000
+          },
+          "from" : {
+            "type" : "integer",
+            "example" : 1662336000000
+          },
+          "to" : {
+            "type" : "integer",
+            "example" : 1662365505000
+          }
+        }
+      },
+      "SerieData" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Serie"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "data" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/components/schemas/HistoryRecord"
+              }
+            }
+          }
+        } ]
+      },
+      "HistoryRecord" : {
+        "type" : "object",
+        "properties" : {
+          "timestamp" : {
+            "type" : "integer",
+            "example" : 1662336000303
+          },
+          "value" : {
+            "type" : "integer",
+            "example" : 113353.6015625
+          },
+          "tags" : {
+            "type" : "string",
+            "example" : ""
+          }
+        }
+      }
+    }
+  }
+}
