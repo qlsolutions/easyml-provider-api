@@ -2,7 +2,7 @@
   "openapi" : "3.0.1",
   "info" : {
     "title" : "EasyML - Servizi REST Data Provider",
-    "description" : "Documentazione API che raccoglie alcune indicazioni circa i servizi REST che i dispositivi Data Provider devono implementare per poter comunicare con lo strato Application del software EasyML.",
+    "description" : "Documentazione API che raccoglie alcune indicazioni circa i servizi REST che i dispositivi Data Provider devono implementare per poter comunicare con lo strato Application del software EasyML..",
     "contact" : {
       "email" : "info@qlsol.com"
     },
