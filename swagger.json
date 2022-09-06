@@ -215,7 +215,7 @@
       "Series" : {
         "type" : "object",
         "properties" : {
-          "providers" : {
+          "series" : {
             "type" : "array",
             "description" : "collezione dei DataProvider configurati nel sistema",
             "items" : {
