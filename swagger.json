@@ -229,11 +229,11 @@
         "properties" : {
           "id" : {
             "type" : "string",
-            "example" : "ARNEG_BMS_C/IME245_EW"
+            "example" : "METER_IME245_EW"
           },
           "displayName" : {
             "type" : "string",
-            "example" : "Aus.Tettoia CLL Energia"
+            "example" : "Energia Illuminazione Esterna"
           },
           "firstTimestamp" : {
             "type" : "integer",
